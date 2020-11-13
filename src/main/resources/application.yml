@@ -1,3 +1,8 @@
+app:
+  input-topic: wordcount-input
+  store-name: wordcount-store
+  delete-all-topic: delete-all
+  delete-word-topic: delete-word
 
 spring:
   kafka:
@@ -7,3 +12,32 @@ spring:
         - localhost:9094
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
+  cloud.stream:
+    bindings:
+      wordcount-in-0:
+        destination: ${app.input-topic}
+      wordcount-in-1:
+        destination: ${app.delete-all-topic}
+      wordcount-in-2:
+        destination: ${app.delete-word-topic}
+    kafka:
+      streams:
+        binder:
+          application-id: wordcount
+          brokers:
+            - localhost:9094
+          configuration:
+            commit.interval.ms: 100
+            default:
+              key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+              value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+logging:
+  level:
+    org.springframework.kafka.config: debug
