@@ -28,7 +28,6 @@ spring:
         binder:
           application-id: wordcount
           configuration:
-            commit.interval.ms: 100
             default:
               key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
               value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
