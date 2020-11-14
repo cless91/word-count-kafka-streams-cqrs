@@ -1,15 +1,18 @@
+server:
+  port: 8080
+
 app:
-  contact-events-topic: contact-events
-  store-name: wordcount-store
+  input-topic: wordcount-input
   delete-all-topic: delete-all
   delete-word-topic: delete-word
+  store-name: wordcount-store
 
 spring:
   kafka:
+    bootstrap-servers:
+      - localhost:9094
     producer:
       client-id: wordcount-application
-      bootstrap-servers:
-        - localhost:9094
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
   cloud.stream:
@@ -24,8 +27,6 @@ spring:
       streams:
         binder:
           application-id: wordcount
-          brokers:
-            - localhost:9094
           configuration:
             commit.interval.ms: 100
             default:
