@@ -1,22 +1,9 @@
 package com.example.demo;
 
-import org.apache.kafka.clients.admin.AdminClient;
-import org.apache.kafka.clients.admin.AdminClientConfig;
-import org.apache.kafka.clients.admin.ListTopicsResult;
-import org.apache.kafka.clients.admin.NewTopic;
-import org.apache.kafka.streams.KafkaStreams;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-import javax.annotation.PreDestroy;
-import java.util.Collections;
-import java.util.Properties;
-
-//import static com.example.demo.WordcountApplicationConfig.*;
 
 @SpringBootApplication
 public class WordCountKafkaStreamsCqrsApplication implements ApplicationRunner {

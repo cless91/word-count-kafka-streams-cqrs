@@ -1,5 +1,5 @@
 app:
-  input-topic: wordcount-input
+  contact-events-topic: contact-events
   store-name: wordcount-store
   delete-all-topic: delete-all
   delete-word-topic: delete-word
