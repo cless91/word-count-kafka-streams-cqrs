@@ -56,8 +56,8 @@ par exemple:
 
 ## Quelques commandes utiles
 reset une application kafka-streams:
-```docker exec -it word-count-kafka-streams-cqrs_kafka_1 
-kafka-streams-application-reset --bootstrap-servers kafka:9092 --application-id wordcount
+```
+docker exec -it word-count-kafka-streams-cqrs_kafka_1 kafka-streams-application-reset --bootstrap-servers kafka:9092 --application-id wordcount
 ```
 
 lister les topics:
@@ -127,8 +127,8 @@ for example:
 
 ## Some useful commands
 reset a kafka-streams application:
-```docker exec -it word-count-kafka-streams-cqrs_kafka_1 
-kafka-streams-application-reset --bootstrap-servers kafka:9092 --application-id wordcount
+```
+docker exec -it word-count-kafka-streams-cqrs_kafka_1 kafka-streams-application-reset --bootstrap-servers kafka:9092 --application-id wordcount
 ```
 
 list topics:
