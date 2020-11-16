@@ -51,16 +51,17 @@ qui vient compléter mes connaissances et compétence de Kafka "classique", et �
 `curl -X DELETE localhost:8080/all`
 
 ## Quelques commandes utiles
-reset an application:
+reset une application kafka-streams:
 ```docker exec -it word-count-kafka-streams-cqrs_kafka_1 
 kafka-streams-application-reset --bootstrap-servers kafka:9092 --application-id wordcount
 ```
 
-list topics:
+lister les topics:
 ```
 docker exec -it word-count-kafka-streams-cqrs_kafka_1 kafka-topics --bootstrap-server kafka:9092 --list
 ```
 
 ## Architecture et Design (à venir)
+![](docs/schema.png)
 
-# :fr: Proof-of-Concept kafka-streams, on wordcount
+# :uk: Proof-of-Concept kafka-streams, on wordcount
