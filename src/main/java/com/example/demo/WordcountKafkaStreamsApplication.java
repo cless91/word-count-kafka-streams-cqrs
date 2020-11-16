@@ -13,7 +13,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 @Configuration
-public class WordcountSpringCloudStreamConfig {
+public class WordcountKafkaStreamsApplication {
 
   @Value("${app.input-topic}")
   private String inputTopic;

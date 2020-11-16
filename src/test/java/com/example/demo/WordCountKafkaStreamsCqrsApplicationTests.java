@@ -1,45 +1,49 @@
 package com.example.demo;
 
-import org.apache.kafka.streams.KafkaStreams;
-import org.junit.jupiter.api.AfterEach;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
-@Disabled
+@SpringBootTest(
+    webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+    classes = SpringBootEntryPoint.class
+)
+@Slf4j
 class WordCountKafkaStreamsCqrsApplicationTests {
 
-  @Autowired
-  KafkaStreams kafkaStreams;
-  @Autowired
-  private IWriteText iWriteText;
-  @Autowired
-  private ICountWords iCountWords;
+  private final RestTemplate restTemplate = new RestTemplate();
+  @LocalServerPort
+  private int port;
 
   @BeforeEach
-  void setUp() {
-    kafkaStreams.cleanUp();
-  }
-
-  @AfterEach
-  void tearDown() {
-    kafkaStreams.close();
+  void setUp() throws Exception {
+    URI uri = URI.create(String.format("http://localhost:%d/all", port));
+    log.info("sending delete REST request to " + uri);
+    restTemplate.delete(uri);
   }
 
   @Test
-  void contextLoads() throws InterruptedException {
-    iWriteText.writeText("hello hello world");
-    Thread.sleep(1000);
-    Map<String, Long> count = iCountWords.countWords();
-    Map<String, Long> expectedCount = Map.of("hello", 2L, "world", 1L);
-    assertThat(count).isSameAs(expectedCount);
+  void appWorks() throws Exception {
+    URI writeUri = URI.create(String.format("http://localhost:%d/write", port));
+    URI countUri = URI.create(String.format("http://localhost:%d/count", port));
+    ResponseEntity<Void> writeEntity = restTemplate.postForEntity(writeUri, "hello hello world", Void.TYPE);
+    assertThat(writeEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+    Thread.sleep(500);
+    ResponseEntity<Map> countEntity = restTemplate.getForEntity(countUri, Map.class);
+    assertThat(countEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+    Map<String, Integer> countResponse = countEntity.getBody();
+    Map<String, Integer> expectedCountResponse = Map.of("hello", 2, "world", 1);
+    assertThat(countResponse).containsExactlyInAnyOrderEntriesOf(expectedCountResponse);
   }
 
 }
