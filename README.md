@@ -1,4 +1,13 @@
-# :fr: POC kafka-streams sur "wordcount"
+:fr: Sommaire / :gb: Table of Contents
+=================
+
+<!--ts-->
+   * [French Documentation](#fr-poc-kafka-streams-sur-wordcount)
+   * [English Documentation](#gb-proof-of-concept-kafka-streams-on-wordcount-problem)
+
+---
+
+# :fr: POC kafka-streams sur wordcount
 
 ## Présentation
 
